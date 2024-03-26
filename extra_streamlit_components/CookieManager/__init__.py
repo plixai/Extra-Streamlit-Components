@@ -108,7 +108,9 @@ class CookieManager:
             return
         self.cookie_manager(method="delete", cookie=cookie, key=key, default=False)
 
-        del self.cookies[cookie]
+        # Sometimes setting the cookie doesn't go through immediately and so it isn't in `self.cookies`.
+        if cookie in self.cookies:
+            del self.cookies[cookie]
 
     def get_all(self, key="get_all"):
         self._remove_extra_spacing()
